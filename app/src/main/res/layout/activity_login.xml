@@ -155,25 +155,24 @@
         android:layout_marginHorizontal="@dimen/margin_4"
         android:visibility="invisible">
 
-        <TextView
-            android:id="@+id/textStatus"
+        <ImageView
+            android:id="@+id/imageLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/logging"
-            android:textColor="@android:color/white" />
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerHorizontal="true"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textStatus"
+            android:layout_below="@+id/imageLogo"
             android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_4"
             android:layout_marginEnd="@dimen/margin_4"
             android:indeterminate="true"
-            android:indeterminateTint="@android:color/white" />
+            android:indeterminateTint="@color/login_progressbar" />
     </RelativeLayout>
 
     <LinearLayout

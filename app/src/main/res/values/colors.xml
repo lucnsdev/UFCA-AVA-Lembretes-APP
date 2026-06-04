@@ -25,6 +25,7 @@
     <color name="toolbar">#AA000000</color>
     <color name="accent">#1A9D55</color>
     <color name="accent_light">#1DE476</color>
+    <color name="login_progressbar">#1A9D9B</color>
 
     <color name="login_background">#061F23</color>
     <color name="app_background">#020D0F</color>
