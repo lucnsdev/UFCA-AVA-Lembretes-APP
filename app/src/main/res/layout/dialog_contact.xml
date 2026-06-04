@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/dialog_background"
+    android:elevation="@dimen/margin"
+    android:paddingHorizontal="@dimen/margin_4"
+    android:paddingVertical="@dimen/margin_4">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icon_person_book"
+        android:layout_marginTop="@dimen/margin_3" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageIcon"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_3"
+        android:text="@string/contact"
+        android:textColor="@color/text_title"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin"
+        android:text="@string/contact_description"
+        android:gravity="center"
+        android:textColor="@color/text_default"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/rootButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_2">
+
+        <ImageButton
+            android:id="@+id/imageInstagram"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/fab_transparent"
+            android:padding="@dimen/margin_2" />
+
+        <ImageButton
+            android:id="@+id/imageGmail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_toEndOf="@+id/imageInstagram"
+            android:background="@drawable/fab_transparent"
+            android:padding="@dimen/margin_2" />
+
+        <ImageButton
+            android:id="@+id/imageLinkedin"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_toEndOf="@+id/imageGmail"
+            android:background="@drawable/fab_transparent"
+            android:padding="@dimen/margin_2" />
+
+        <ImageButton
+            android:id="@+id/imageGithub"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_toEndOf="@+id/imageLinkedin"
+            android:background="@drawable/fab_transparent"
+            android:padding="@dimen/margin_2" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rootButtons"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/margin_4"
+        android:background="@drawable/button_state"
+        android:text="@android:string/ok"
+        android:textColor="@color/login_background" />
+</RelativeLayout>

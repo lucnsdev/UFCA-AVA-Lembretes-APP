@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+    <lucns.avareminders.views.SemiCircleView
+        android:id="@+id/circleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        -->
+
+    <lucns.avareminders.views.CustomListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarThumbVertical="@drawable/thumb_scrollbar"
+        app:spaceBetween="@dimen/margin_3" />
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_background"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="64dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_marginStart="@dimen/margin">
+
+            <lucns.avareminders.views.ProfileImageView
+                android:id="@+id/profileImage"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height" />
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3"
+                android:layout_toEndOf="@+id/profileImage"
+                android:text="@string/my_courses"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/profileImage"
+                android:layout_marginStart="@dimen/margin_3"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_toEndOf="@+id/profileImage"
+                android:text="@string/student"
+                android:textColor="@color/accent" />
+
+            <ImageButton
+                android:id="@+id/buttonMenu"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/item_icon_background"
+                android:src="@drawable/icon_more_vertical" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include
+        layout="@layout/item_try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/indeterminate_progress_bar"
+        android:orientation="horizontal"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/rootNoConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_warning" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_no_internet"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:background="@drawable/navigationbar_background"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textDeveloped"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/developed_by"
+            android:textColor="@color/white_4"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/textVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin" />
+    </LinearLayout>
+</RelativeLayout>

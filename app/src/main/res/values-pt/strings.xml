@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Ava Lembretes</string>
+    <string name="notification_alert">Alertas</string>
+    <string name="notification_silent">Silenciosa</string>
+
+    <string name="developed_by">Desenvolvido por @lucns</string>
+    <string name="format_version">Versão %s</string>
+    <string name="format_error_request">Código rest: %d</string>
+
+    <string name="about">Sobre</string>
+    <string name="about_description">Esta aplicação tem como objetivo apenas mostrar de forma clara e direta, as informações sobre os compromissos que o aluno tem em relação as disciplinas cursadas na plataforma Moodle.</string>
+    <string name="contact">Contato</string>
+    <string name="contact_description">Para contato, sugestões ou críticas, acesse alguma das plataformas abaixo:</string>
+    <string name="settings">Ajustes</string>
+    <string name="user">UsiáriUsuário</string>
+    <string name="password">Senha</string>
+    <string name="login">Acessar</string>
+    <string name="logging">Acessando&#8230;</string>
+    <string name="logout">Sair</string>
+    <string name="not_request_again">Não solicitar novamente</string>
+    <string name="empty">Vazio.</string>
+    <string name="wrong_credentials">Credenciais inválidas.</string>
+    <string name="activities">Atividades e Trabalhos</string>
+    <string name="meetings">Encontros Síncronos</string>
+    <string name="student">Estudante</string>
+    <string name="concluded">(Concluído)</string>
+
+
+    <string name="loading">Carregando&#8230;</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="failure_try_again">Falha na obtenção dos dados. Tentar novamente.</string>
+    <string name="course">Curso</string>
+    <string name="courses">Cursos</string>
+    <string name="my_courses">Meus Cursos</string>
+    <string name="not_specified">Não especificado</string>
+    <string name="open_in">Aberto as:</string>
+    <string name="close_in">Fecha as:</string>
+    <string name="starts_at">Inicia as:</string>
+    <string name="ends_at">Finaliza as:</string>
+    <string name="not_implemented">Não implementado.</string>
+    <string name="close">Fechar</string>
+
+    <string name="error_no_internet">Sem conexão à internet!</string>
+    <string name="error_no_response">Sem resposta! Código: %d</string>
+    <string name="error_time_out">Servidor demorou a responder!</string>
+    <string name="error_app_internal">Erro interno do app!</string>
+    <string name="error_bad_connection">Conexão ruim!</string>
+    <string name="error_no_data">Sem dados no stream!</string>
+    <string name="error_bad_request">Requisição ruim!</string>
+    <string name="error_operation_not_authorized">Operação não autorizada!</string>
+    <string name="error_unauthenticated">Não autenticado!</string>
+    <string name="error_not_found">Não encontrado!</string>
+    <string name="error_server">Erro de servidor! Tente novamente.</string>
+    <string name="error">Erro!</string>
+    <string name="connection_failure">Falha de Conexão!</string>
+    <string name="connection_failure_description">Servdor offline ou dispositivo sem conexão. Pode ser que o sistema do Moodle esteja em manutenção.</string>
+</resources>

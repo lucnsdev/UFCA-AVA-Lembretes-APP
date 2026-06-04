@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_background"
+    android:padding="@dimen/margin_4">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_toStartOf="@+id/buttonExpand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonIcon"
+                android:layout_width="@dimen/button"
+                android:layout_height="@dimen/button"
+                android:background="@drawable/item_icon_background"
+                android:src="@drawable/icon_book" />
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3"
+                android:fontFamily="@font/light"
+                android:text="@string/course"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/buttonExpand"
+            android:layout_width="@dimen/button"
+            android:layout_height="@dimen/button"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/fab_transparent"
+            android:src="@drawable/icon_arrow_up" />
+    </RelativeLayout>
+
+    <lucns.avareminders.views.FlexibleLayout
+        android:id="@+id/flexibleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/margin" />
+</RelativeLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/dialog_background"
+    android:elevation="@dimen/margin"
+    android:paddingHorizontal="@dimen/margin_4"
+    android:paddingVertical="@dimen/margin">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_3" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageIcon"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin_3"
+        android:textColor="@color/text_title"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/margin"
+        android:gravity="center"
+        android:textColor="@color/text_default"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@+id/textDescription"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_4"
+        android:background="@drawable/button_state"
+        android:text="@string/close"
+        android:layout_marginBottom="@dimen/margin_4"
+        android:textColor="@color/login_background" />
+</RelativeLayout>

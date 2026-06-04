@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#efefef</color>
+    <color name="white_2">#d6d6d6</color>
+    <color name="white_3">#b3b3b3</color>
+    <color name="white_4">#a6a6a6</color>
+    <color name="white_5">#939393</color>
+    <color name="gray">#888888</color>
+    <color name="gray_2">#7b7b7b</color>
+    <color name="gray_3">#747474</color>
+    <color name="gray_4">#6c6c6c</color>
+    <color name="gray_5">#686868</color>
+    <color name="gray_6">#5e5e5e</color>
+    <color name="gray_7">#4d4c4c</color>
+    <color name="gray_8">#454545</color>
+    <color name="gray_9">#3d3d3d</color>
+    <color name="gray_10">#2e2e2e</color>
+    <color name="gray_11">#282828</color>
+    <color name="gray_12">#242424</color>
+    <color name="gray_13">#202020</color>
+    <color name="gray_14">#161616</color>
+    <color name="gray_15">#121212</color>
+    <color name="gray_16">#080808</color>
+
+    <color name="toolbar">#AA000000</color>
+    <color name="accent">#1A9D55</color>
+    <color name="accent_light">#1DE476</color>
+
+    <color name="login_background">#061F23</color>
+    <color name="app_background">#020D0F</color>
+    <color name="fragment_background">#2BFFFFFF</color>
+    <color name="text_title">#E0FFFFFF</color>
+    <color name="text_default">#B4FFFFFF</color>
+
+    <color name="sub_item_green_border">#2A6251</color>
+    <color name="sub_item_green">#162A25</color>
+    <color name="sub_item_red_border">#832B3C</color>
+    <color name="sub_item_red">#2C1D20</color>
+    <color name="orange">#FFB300</color>
+    <color name="button_disabled">#27FFFFFF</color>
+    <color name="button_translucent">#80FFFFFF</color>
+    <color name="text_red">#f05658</color>
+    <color name="edittext_background">#2BFFFFFF</color>
+
+    <color name="cyan">#00c0ff</color>
+    <color name="turquoise">#5786FE</color>
+    <color name="purple">#B478FF</color>
+    <color name="red">#FF4B7D</color>
+    <color name="yellow">#ffd53b</color>
+    <color name="green">#5cd367</color>
+    <color name="item_background">#091016</color>
+    <color name="item_border">#353F4E</color>
+    <color name="item_icon_background">#1e2228</color>
+    <color name="item_icon_ripple">#282F3A</color>
+    <color name="subitem_background">#152735</color>
+    <color name="subitem_border">#385566</color>
+    <color name="subitem_title">#488BB3</color>
+    <color name="progress_bar">#5E7280</color>
+    <color name="button_background">#306F8C</color>
+    <color name="button_border">#2881A9</color>
+    <color name="button_secondary_background">#28374D</color>
+    <color name="button_secondary_border">#31445F</color>
+</resources>
