@@ -153,6 +153,7 @@ public class CourseRetrieveView {
         if (tasks.length == 0) {
             putEmptyInActivitiesRoot();
         }
+        UIController uiController = UIController.getInstance(flexibleLayout.getContext());
         for (Task task : tasks) {
             View view = inflater.inflate(R.layout.item_task, null, false);
             View line = view.findViewById(R.id.line);
@@ -164,17 +165,33 @@ public class CourseRetrieveView {
             TextView textBottomEnd = view.findViewById(R.id.textBottomEnd);
             textCenterStart.setText(R.string.open_in);
             textCenterEnd.setText(R.string.close_in);
+            ImageView iconCenterStart = view.findViewById(R.id.iconCenterStart);
+            ImageView iconCenterEnd = view.findViewById(R.id.iconCenterEnd);
 
-            if (task.type == Task.QUIZ) {
-                iconTitle.setImageResource(R.drawable.icon_list);
-            } else if (task.type == Task.FINAL_TEST) {
-                iconTitle.setImageResource(R.drawable.icon_school_test);
-            } else if (task.type == Task.FORUM) {
-                iconTitle.setImageResource(R.drawable.icon_message);
-            } else { // Task.DELIVERY
-                iconTitle.setImageResource(R.drawable.icon_pdf);
-            }
             long passedTime = task.getRemainingMinutes(task.overdueDate);
+            int red = flexibleLayout.getContext().getColor(R.color.text_red);
+            if (passedTime <= 60 * 24) {
+                if (task.type == Task.QUIZ) {
+                    iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_list, red));
+                } else if (task.type == Task.FINAL_TEST) {
+                    iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_school_test, red));
+                } else if (task.type == Task.FORUM) {
+                    iconTitle.setImageResource(R.drawable.icon_message);
+                    iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_message, red));
+                } else { // Task.DELIVERY
+                    iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_pdf, red));
+                }
+            } else {
+                if (task.type == Task.QUIZ) {
+                    iconTitle.setImageResource(R.drawable.icon_list);
+                } else if (task.type == Task.FINAL_TEST) {
+                    iconTitle.setImageResource(R.drawable.icon_school_test);
+                } else if (task.type == Task.FORUM) {
+                    iconTitle.setImageResource(R.drawable.icon_message);
+                } else { // Task.DELIVERY
+                    iconTitle.setImageResource(R.drawable.icon_pdf);
+                }
+            }
             if (task.expired || passedTime <= 1) {
                 view.setAlpha(0.3f);
                 textTopStart.setTextColor(Color.WHITE);
@@ -182,7 +199,15 @@ public class CourseRetrieveView {
                 line.setBackgroundColor(flexibleLayout.getContext().getColor(R.color.sub_item_green_border));
                 view.setBackgroundResource(R.drawable.sub_item_green);
             } else if (passedTime <= 60 * 24) {
-                line.setBackgroundColor(flexibleLayout.getContext().getColor(R.color.red));
+                iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_camera, red));
+                textCenterStart.setTextColor(red);
+                textCenterEnd.setTextColor(red);
+                textBottomStart.setTextColor(red);
+                textBottomEnd.setTextColor(red);
+                line.setBackgroundColor(red);
+                line.setBackgroundColor(red);
+                iconCenterStart.setImageDrawable(uiController.tint(R.drawable.icon_clock, red));
+                iconCenterEnd.setImageDrawable(uiController.tint(R.drawable.icon_clock, red));
                 view.setBackgroundResource(R.drawable.sub_item_red);
             }
             textTopStart.setText(task.title + (task.concluded ? " " + flexibleLayout.getContext().getString(R.string.concluded) : ""));

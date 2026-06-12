@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ava Lembretes</string>
+    <string name="app_name">Lembretes AVA</string>
     <string name="notification_alert">Alertas</string>
     <string name="notification_silent">Silenciosa</string>
 
