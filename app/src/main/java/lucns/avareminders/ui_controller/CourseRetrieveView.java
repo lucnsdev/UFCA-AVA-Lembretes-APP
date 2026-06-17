@@ -154,7 +154,8 @@ public class CourseRetrieveView {
             putEmptyInActivitiesRoot();
         }
         UIController uiController = UIController.getInstance(flexibleLayout.getContext());
-        for (Task task : tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            Task task = tasks[i];
             View view = inflater.inflate(R.layout.item_task, null, false);
             View line = view.findViewById(R.id.line);
             ImageView iconTitle = view.findViewById(R.id.iconTitle);
@@ -231,7 +232,8 @@ public class CourseRetrieveView {
             putEmptyInMeetingRoot();
         }
         UIController uiController = UIController.getInstance(flexibleLayout.getContext());
-        for (SynchronousMeeting meeting : meetings) {
+        for (int i = 0; i < meetings.length; i++) {
+            SynchronousMeeting meeting = meetings[i];
             View view = inflater.inflate(R.layout.item_task, null, false);
             View line = view.findViewById(R.id.line);
             ImageView iconTitle = view.findViewById(R.id.iconTitle);
@@ -265,6 +267,11 @@ public class CourseRetrieveView {
                 iconCenterEnd.setImageDrawable(uiController.tint(R.drawable.icon_clock, red));
             } else {
                 iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_camera, Color.WHITE));
+            }
+            if (rootMeting.getChildCount() > 0) {
+                Space space = new Space(flexibleLayout.getContext());
+                space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(16)));
+                rootMeting.addView(space);
             }
             rootMeting.addView(view);
         }
