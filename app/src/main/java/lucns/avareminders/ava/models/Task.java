@@ -11,8 +11,8 @@ public class Task {
     public static final int QUIZ = 2;
     public static final int FINAL_TEST = 3;
 
-    public String title, overdueDate, openedDate;
-    public boolean concluded, expired;
+    public String title, overdueDate, openedDate, url;
+    public boolean concluded, expired, invalid;
     public int type;
 
     public Task() {}

@@ -247,7 +247,8 @@ public class MainActivity extends Activity {
         sortedCourses.addAll(notExpiredCourses);
         sortedCourses.addAll(expiredCourses);
         Course[] courses = sortedCourses.toArray(new Course[0]);
-        //Course[] courses = new Course[]{notExpiredCourses.get(2)};
+        //Course[] courses = new Course[]{cs[3]}; // for debug
+        //Log.d("Lucas", "Course name: " + courses[0].name);
 
         progressBar.setVisibility(View.INVISIBLE);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
@@ -297,13 +298,13 @@ public class MainActivity extends Activity {
                         if (flexibleLayout.isFlexing()) return;
                         if (flexibleLayout.isExpanded()) {
                             flexibleLayout.constrict();
-                            ObjectAnimator animation = ObjectAnimator.ofFloat(buttonExpand, "rotation", 180f, 0f);
+                            ObjectAnimator animation = ObjectAnimator.ofFloat(buttonExpand, "rotation", 0f, 180f);
                             animation.setDuration(300);
                             animation.setInterpolator(new DecelerateInterpolator());
                             animation.start();
                         } else {
                             flexibleLayout.expand();
-                            ObjectAnimator animation = ObjectAnimator.ofFloat(buttonExpand, "rotation", 0f, 180f);
+                            ObjectAnimator animation = ObjectAnimator.ofFloat(buttonExpand, "rotation", 180f, 0f);
                             animation.setDuration(300);
                             animation.setInterpolator(new DecelerateInterpolator());
                             animation.start();

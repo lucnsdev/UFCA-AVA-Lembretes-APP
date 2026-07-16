@@ -115,9 +115,14 @@ public class SessionTasksRestApi extends RestApiBase {
                 task = Task.validateType(line.split("\"")[1]);
                 continue;
             }
+            if (task != null && line.contains("cm-link")) {
+                task.url = line.split("\"")[3];
+                // continue;
+            }
             if (line.contains("instancename") && task != null) {
                 title = Utils.removeEmojis(line.split("\"")[8]);
                 task.title = title.substring(1, title.indexOf("<")).trim();
+                if (checkIsInvalid(task.title)) task.invalid = true;
                 if (task.title.toLowerCase().contains("avaliação")) task.type = Task.FINAL_TEST;
                 continue;
             }
@@ -141,7 +146,7 @@ public class SessionTasksRestApi extends RestApiBase {
             if (line.contains("</li>")) {
                 waitingConcludedButton = false;
                 inButton = false;
-                if (task != null) taskList.add(task);
+                if (task != null && !task.invalid) taskList.add(task);
                 task = null;
                 continue;
             } else if (line.contains("activity-completion")) {
@@ -164,5 +169,17 @@ public class SessionTasksRestApi extends RestApiBase {
             }
         }
         if (!taskList.isEmpty()) session.tasks = taskList.toArray(new Task[0]);
+    }
+
+    private boolean checkIsInvalid(String title) {
+        String[] blackList = new String[] {
+                "Central de Avisos",
+                "Fórum de Discussões e Dúvidas",
+                "Tira Dúvidas"
+        };
+        for (String black : blackList) {
+            if (title.toLowerCase().contains(black.toLowerCase())) return true;
+        }
+        return false;
     }
 }

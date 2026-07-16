@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
-
-import java.sql.Time;
 
 import lucns.avareminders.R;
 import lucns.avareminders.ava.AvaUtils;
@@ -20,6 +19,7 @@ import lucns.avareminders.rest_api.ava.ResponseCallback;
 import lucns.avareminders.rest_api.ava.SessionTasksRestApi;
 import lucns.avareminders.rest_api.ava.SessionsRestApi;
 import lucns.avareminders.rest_api.ava.SynchronousMetingRestApi;
+import lucns.avareminders.rest_api.ava.TaskOverDueDateRestApi;
 import lucns.avareminders.utils.TimeRegister;
 import lucns.avareminders.utils.Utils;
 import lucns.avareminders.views.FlexibleLayout;
@@ -168,6 +168,7 @@ public class CourseRetrieveView {
             textCenterEnd.setText(R.string.close_in);
             ImageView iconCenterStart = view.findViewById(R.id.iconCenterStart);
             ImageView iconCenterEnd = view.findViewById(R.id.iconCenterEnd);
+            ProgressBar progressBar = view.findViewById(R.id.progressBar);
 
             long passedTime = task.getRemainingMinutes(task.overdueDate);
             int red = flexibleLayout.getContext().getColor(R.color.text_red);
@@ -200,7 +201,7 @@ public class CourseRetrieveView {
                 line.setBackgroundColor(flexibleLayout.getContext().getColor(R.color.sub_item_green_border));
                 view.setBackgroundResource(R.drawable.sub_item_green);
             } else if (passedTime <= 60 * 24) {
-                iconTitle.setImageDrawable(uiController.tint(R.drawable.icon_camera, red));
+                iconTitle.setImageDrawable(uiController.tintDrawable(iconTitle.getDrawable(), red));
                 textCenterStart.setTextColor(red);
                 textCenterEnd.setTextColor(red);
                 textBottomStart.setTextColor(red);
@@ -214,8 +215,62 @@ public class CourseRetrieveView {
             textTopStart.setText(task.title + (task.concluded ? " " + flexibleLayout.getContext().getString(R.string.concluded) : ""));
             if (task.openedDate == null) textBottomStart.setText(R.string.not_specified);
             else textBottomStart.setText(task.openedDate);
-            if (task.overdueDate == null) textBottomEnd.setText(R.string.not_specified);
-            else textBottomEnd.setText(task.overdueDate);
+            if (task.overdueDate == null) {
+                textBottomEnd.setText(R.string.not_specified);
+                if (Utils.hasInternetConnection() && task.url != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    new TaskOverDueDateRestApi(new ResponseCallback() {
+                        @Override
+                        public void onUnauthenticated() {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            textBottomEnd.setTextColor(flexibleLayout.getContext().getColor(R.color.orange));
+                            textBottomEnd.setText(R.string.error);
+                        }
+
+                        @Override
+                        public void onError(int responseCode) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            textBottomEnd.setTextColor(flexibleLayout.getContext().getColor(R.color.orange));
+                            textBottomEnd.setText(R.string.error);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            if (task.openedDate == null) {
+                                textBottomStart.setText(R.string.not_specified);
+                            } else {
+                                textBottomStart.setText(task.openedDate);
+                            }
+                            if (task.overdueDate == null) {
+                                textBottomEnd.setText(R.string.not_specified);
+                            } else {
+                                textBottomEnd.setText(task.overdueDate);
+                                long passedTime = task.getRemainingMinutes(task.overdueDate);
+                                if (passedTime <= 1) {
+                                    view.setAlpha(0.3f);
+                                    return;
+                                }
+                                if (task.concluded) return;
+                                if (passedTime <= 60 * 24) {
+                                    iconTitle.setImageDrawable(uiController.tintDrawable(iconTitle.getDrawable(), red));
+                                    textCenterStart.setTextColor(red);
+                                    textCenterEnd.setTextColor(red);
+                                    textBottomStart.setTextColor(red);
+                                    textBottomEnd.setTextColor(red);
+                                    line.setBackgroundColor(red);
+                                    line.setBackgroundColor(red);
+                                    iconCenterStart.setImageDrawable(uiController.tint(R.drawable.icon_clock, red));
+                                    iconCenterEnd.setImageDrawable(uiController.tint(R.drawable.icon_clock, red));
+                                    view.setBackgroundResource(R.drawable.sub_item_red);
+                                }
+                            }
+                        }
+                    }).request(task);
+                }
+            } else {
+                textBottomEnd.setText(task.overdueDate);
+            }
             if (rootActivities.getChildCount() > 0) {
                 Space space = new Space(flexibleLayout.getContext());
                 space.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dpToPx(16)));

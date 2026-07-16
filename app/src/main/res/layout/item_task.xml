@@ -27,6 +27,13 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminateDrawable="@drawable/indeterminate_progress_bar_small"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <View
@@ -95,10 +102,10 @@
     <TextView
         android:id="@+id/textBottomStart"
         android:layout_width="match_parent"
-        android:layout_toStartOf="@+id/textBottomEnd"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rootTimeStart"
         android:layout_marginTop="@dimen/margin"
+        android:layout_toStartOf="@+id/textBottomEnd"
         android:textColor="@color/white" />
 
     <TextView

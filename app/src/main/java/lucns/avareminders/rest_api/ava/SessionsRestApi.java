@@ -98,7 +98,7 @@ public class SessionsRestApi extends RestApiBase {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonSession = jsonArray.getJSONObject(i);
                 String title = jsonSession.getString("name");
-                if (title.contains("Sala de Aula Virtual")) {
+                if (title.contains("Sala de Aula Virtual") && jsonSession.getString("module").equals("lti")) {
                     course.synchronousMeetingPartitionId = Integer.parseInt(jsonSession.getString("id"));
                 }
             }
@@ -111,49 +111,11 @@ public class SessionsRestApi extends RestApiBase {
         try {
             JSONObject jsonObject = new JSONObject(new JSONArray(json).getJSONObject(0).getString("data"));
             JSONArray jsonArray = jsonObject.getJSONArray("section");
-            int[] ids = new int[jsonArray.length()];
-            String[] titles = new String[jsonArray.length()];
+            course.sessions = new Session[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonSession = jsonArray.getJSONObject(i);
-                ids[i] = Integer.parseInt(jsonSession.getString("id"));
-                titles[i] = jsonSession.getString("title");
+                course.sessions[i] = new Session(Integer.parseInt(jsonSession.getString("id")), jsonSession.getString("title"));
             }
-            if (course.sessions == null) {
-                course.sessions = new Session[ids.length];
-                for (int i = 0; i < ids.length; i++) {
-                    course.sessions[i] = new Session(ids[i], titles[i]);
-                }
-            } else if (course.sessions.length < ids.length) {
-                Session[] sessionSegments = new Session[ids.length];
-                int i = 0;
-                while ( i < course.sessions.length) {
-                    sessionSegments[i] = course.sessions[i];
-                    i++;
-                }
-                boolean found;
-                for (int a = 0; a < ids.length; a++) {
-                    found = false;
-                    for (Session segment : sessionSegments) {
-                        if (segment == null) continue;
-                        if (segment.id == ids[a]) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        sessionSegments[i] = new Session(ids[a], titles[a]);
-                        i++;
-                    }
-                }
-            }
-            /*
-            Arrays.sort(course.sessions, new Comparator<Session>() {
-                @Override
-                public int compare(Session o1, Session o2) {
-                    return Integer.compare(o1.id, o2.id);
-                }
-            });
-             */
         } catch (JSONException | NumberFormatException e) {
             e.printStackTrace();
         }
