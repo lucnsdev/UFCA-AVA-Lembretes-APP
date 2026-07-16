@@ -174,7 +174,7 @@ public class SessionTasksRestApi extends RestApiBase {
     private boolean checkIsInvalid(String title) {
         String[] blackList = new String[] {
                 "Central de Avisos",
-                "Fórum de Discussões e Dúvidas",
+                "Fórum de Discussões",
                 "Tira Dúvidas"
         };
         for (String black : blackList) {

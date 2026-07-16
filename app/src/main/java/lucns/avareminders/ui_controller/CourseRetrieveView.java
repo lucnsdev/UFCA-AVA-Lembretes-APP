@@ -10,6 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+
 import lucns.avareminders.R;
 import lucns.avareminders.ava.AvaUtils;
 import lucns.avareminders.ava.models.Course;
@@ -154,6 +161,7 @@ public class CourseRetrieveView {
             putEmptyInActivitiesRoot();
         }
         UIController uiController = UIController.getInstance(flexibleLayout.getContext());
+        Map<String, TaskOverDueDateRestApi> map = new HashMap<>();
         for (int i = 0; i < tasks.length; i++) {
             Task task = tasks[i];
             View view = inflater.inflate(R.layout.item_task, null, false);
@@ -219,9 +227,11 @@ public class CourseRetrieveView {
                 textBottomEnd.setText(R.string.not_specified);
                 if (Utils.hasInternetConnection() && task.url != null) {
                     progressBar.setVisibility(View.VISIBLE);
-                    new TaskOverDueDateRestApi(new ResponseCallback() {
+                    TaskOverDueDateRestApi taskOverDueDateRestApi = new TaskOverDueDateRestApi(new ResponseCallback() {
                         @Override
                         public void onUnauthenticated() {
+                            map.remove(task.url);
+                            if (map.isEmpty()) AvaUtils.setTasks(course.id, tasks);
                             progressBar.setVisibility(View.INVISIBLE);
                             textBottomEnd.setTextColor(flexibleLayout.getContext().getColor(R.color.orange));
                             textBottomEnd.setText(R.string.error);
@@ -229,6 +239,8 @@ public class CourseRetrieveView {
 
                         @Override
                         public void onError(int responseCode) {
+                            map.remove(task.url);
+                            if (map.isEmpty()) AvaUtils.setTasks(course.id, tasks);
                             progressBar.setVisibility(View.INVISIBLE);
                             textBottomEnd.setTextColor(flexibleLayout.getContext().getColor(R.color.orange));
                             textBottomEnd.setText(R.string.error);
@@ -236,6 +248,8 @@ public class CourseRetrieveView {
 
                         @Override
                         public void onFinish() {
+                            map.remove(task.url);
+                            if (map.isEmpty()) AvaUtils.setTasks(course.id, tasks);
                             progressBar.setVisibility(View.INVISIBLE);
                             if (task.openedDate == null) {
                                 textBottomStart.setText(R.string.not_specified);
@@ -266,7 +280,9 @@ public class CourseRetrieveView {
                                 }
                             }
                         }
-                    }).request(task);
+                    });
+                    map.put(task.url, taskOverDueDateRestApi);
+                    taskOverDueDateRestApi.request(task);
                 }
             } else {
                 textBottomEnd.setText(task.overdueDate);
