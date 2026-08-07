@@ -1,4 +1,4 @@
-package lucns.avareminders.ava.models;
+package lucns.avareminders.ava_utilities.models;
 
 import java.util.ArrayList;
 import java.util.Calendar;

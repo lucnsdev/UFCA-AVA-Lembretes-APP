@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -26,14 +28,15 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import lucns.avareminders.R;
-import lucns.avareminders.ava.AvaUtils;
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.Student;
+import lucns.avareminders.ava_utilities.AvaUtils;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.Student;
 import lucns.avareminders.rest_api.ava.CoursesRestApi;
 import lucns.avareminders.rest_api.ava.ProfileRestApi;
 import lucns.avareminders.rest_api.ava.ResponseCallback;
@@ -53,10 +56,11 @@ public class MainActivity extends Activity {
     private CustomDialog customDialog;
     private CoursesRestApi coursesRestApi;
     private CustomListView listView;
-    private ProgressBar progressBar;
+    private ProgressBar toolbarProgressBar, progressBar;
     private LinearLayout rootNoConnection;
     private UIController uiController;
     private ProfileRestApi profileRestApi;
+    private ImageButton buttonShortcut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +94,16 @@ public class MainActivity extends Activity {
         TextView textName = findViewById(R.id.textName);
         ProfileImageView profileImage = findViewById(R.id.profileImage);
         progressBar = findViewById(R.id.progressBar);
+        toolbarProgressBar = findViewById(R.id.toolbarProgressBar);
         listView = findViewById(R.id.listView);
+        buttonShortcut = findViewById(R.id.buttonShortcut);
+        buttonShortcut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TasksActivity.class));
+                //finish();
+            }
+        });
         coursesRestApi = new CoursesRestApi(new ResponseCallback() {
             @Override
             public void onUnauthenticated() {
@@ -108,6 +121,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFinish(Course[] cs) {
+                progressBar.setVisibility(View.INVISIBLE);
                 new TimeRegister("courses").setLastUpdate();
                 updateCourses(cs);
             }
@@ -251,6 +265,7 @@ public class MainActivity extends Activity {
         //Log.d("Lucas", "Course name: " + courses[0].name);
 
         progressBar.setVisibility(View.INVISIBLE);
+        List<CourseRetrieveView> queue = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         CourseRetrieveView[] controllers = new CourseRetrieveView[courses.length];
         View[] views = new View[courses.length];
@@ -328,13 +343,50 @@ public class MainActivity extends Activity {
                             public void onError(int responseCode) {
                                 Notify.showErrorToast(responseCode);
                             }
+
+                            @Override
+                            public void onFinish() {
+                                queue.remove(controllers[position]);
+                                if (queue.isEmpty()) {
+                                    showShortcutButton();
+                                }
+                            }
                         });
+                        queue.add(controllers[position]);
                         controllers[position].retrieve();
                     }
                 }
                 return views[position];
             }
         });
+    }
+
+    private void showShortcutButton() {
+        if (buttonShortcut.getVisibility() == View.VISIBLE) return;
+        toolbarProgressBar.setVisibility(View.INVISIBLE);
+        buttonShortcut.setAlpha(0f);
+        buttonShortcut.setVisibility(View.VISIBLE);
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long duration = 500;
+                float from = 0.25f;
+                buttonShortcut.setScaleX(from);
+                buttonShortcut.setScaleY(from);
+                ObjectAnimator alpha = ObjectAnimator.ofFloat(buttonShortcut, "alpha", from, 1f);
+                alpha.setInterpolator(new DecelerateInterpolator());
+                alpha.setDuration(duration);
+                alpha.start();
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(buttonShortcut, "scaleX", from, 1f);
+                scaleX.setInterpolator(new DecelerateInterpolator());
+                scaleX.setDuration(duration);
+                scaleX.start();
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(buttonShortcut, "scaleY", from, 1f);
+                scaleY.setInterpolator(new DecelerateInterpolator());
+                scaleY.setDuration(duration);
+                scaleY.start();
+            }
+        }, 1000);
     }
 
     @Override

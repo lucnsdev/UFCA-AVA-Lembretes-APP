@@ -1,15 +1,13 @@
-package lucns.avareminders.ava;
-
-import android.util.Log;
+package lucns.avareminders.ava_utilities;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.Session;
-import lucns.avareminders.ava.models.SynchronousMeeting;
-import lucns.avareminders.ava.models.Task;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.Session;
+import lucns.avareminders.ava_utilities.models.SynchronousMeeting;
+import lucns.avareminders.ava_utilities.models.Task;
 import lucns.avareminders.utils.Annotator;
 
 public class AvaUtils {
@@ -99,6 +97,7 @@ public class AvaUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 tasks[i] = new Task();
+                tasks[i].courseName = jsonObject.getString("courseName");
                 tasks[i].title = jsonObject.getString("title");
                 tasks[i].overdueDate = jsonObject.optString("overdueDate", null);
                 tasks[i].openedDate = jsonObject.optString("openedDate", null);
@@ -118,6 +117,7 @@ public class AvaUtils {
         try {
             for (Task task : tasks) {
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.put("courseName", task.courseName);
                 jsonObject.put("title", task.title);
                 jsonObject.put("overdueDate", task.overdueDate);
                 jsonObject.put("openedDate", task.openedDate);
@@ -141,6 +141,7 @@ public class AvaUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 meetings[i] = new SynchronousMeeting();
+                meetings[i].courseName = jsonObject.getString("courseName");
                 meetings[i].title = jsonObject.getString("title");
                 meetings[i].date = jsonObject.getString("date");
                 meetings[i].duration = jsonObject.getString("duration");
@@ -158,6 +159,7 @@ public class AvaUtils {
         try {
             for (SynchronousMeeting meeting : meetings) {
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.put("courseName", meeting.courseName);
                 jsonObject.put("title", meeting.title);
                 jsonObject.put("date", meeting.date);
                 jsonObject.put("duration", meeting.duration);

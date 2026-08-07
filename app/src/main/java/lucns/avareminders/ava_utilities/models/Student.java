@@ -1,4 +1,4 @@
-package lucns.avareminders.ava.models;
+package lucns.avareminders.ava_utilities.models;
 
 public class Student {
 

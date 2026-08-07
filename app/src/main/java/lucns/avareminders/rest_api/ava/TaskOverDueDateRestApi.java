@@ -6,7 +6,7 @@ import android.os.Looper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import lucns.avareminders.ava.models.Task;
+import lucns.avareminders.ava_utilities.models.Task;
 import lucns.avareminders.rest_api.internal.HttpStatus;
 import lucns.avareminders.rest_api.internal.RestApiBase;
 import lucns.avareminders.utils.Annotator;

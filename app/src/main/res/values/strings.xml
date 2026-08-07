@@ -38,6 +38,8 @@
     <string name="ends_at">Ends at:</string>
     <string name="not_implemented">Not implemented.</string>
     <string name="close">Close</string>
+    <string name="tasks">Tasks, Works and Final Tests</string>
+    <string name="all_sorted_by_date">All sorted by date</string>
 
     <string name="error_no_internet">No internet connection!</string>
     <string name="error_no_response">No response! Code: %d</string>

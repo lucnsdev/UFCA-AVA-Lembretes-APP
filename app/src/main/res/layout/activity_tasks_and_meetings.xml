@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_3"
+        android:layout_marginTop="56dp"
+        android:text="@string/tasks"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textSubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_3"
+        android:text="@string/all_sorted_by_date"
+        android:layout_below="@+id/textTitle"
+        android:textColor="@color/gray"
+        android:textSize="16sp" />
+
+    <include
+        layout="@layout/item_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="@dimen/margin_3"
+        android:divider="#00000000"
+        android:layout_below="@+id/textSubTitle"
+        android:layout_marginTop="@dimen/margin_3"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarThumbVertical="@drawable/thumb_scrollbar" />
+</RelativeLayout>

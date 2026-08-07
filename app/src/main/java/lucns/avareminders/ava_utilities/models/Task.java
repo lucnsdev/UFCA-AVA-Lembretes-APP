@@ -1,19 +1,12 @@
-package lucns.avareminders.ava.models;
+package lucns.avareminders.ava_utilities.models;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Task {
+public class Task extends AvaEvent {
 
-    public static final int DELIVERY = 0;
-    public static final int FORUM = 1;
-    public static final int QUIZ = 2;
-    public static final int FINAL_TEST = 3;
-
-    public String title, overdueDate, openedDate, url;
-    public boolean concluded, expired, invalid;
-    public int type;
+    public String overdueDate, openedDate, url;
 
     public Task() {}
 
@@ -34,6 +27,22 @@ public class Task {
         }
     }
 
+    @Override
+    public String getStartDateTime() {
+        return openedDate;
+    }
+
+    @Override
+    public String getEndDateTime() {
+        return overdueDate;
+    }
+
+    @Override
+    public long getRemainingMinutes() {
+        return getRemainingMinutes(overdueDate);
+    }
+
+    @Override
     public long getRemainingMinutes(String dateTime) {
         if (dateTime == null) return (60 * 24) + 1;
         else if (dateTime.equals("expired")) return 0;

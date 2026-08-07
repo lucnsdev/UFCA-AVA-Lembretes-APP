@@ -10,18 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.Space;
 import android.widget.TextView;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 import lucns.avareminders.R;
-import lucns.avareminders.ava.AvaUtils;
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.SynchronousMeeting;
-import lucns.avareminders.ava.models.Task;
+import lucns.avareminders.ava_utilities.AvaUtils;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.SynchronousMeeting;
+import lucns.avareminders.ava_utilities.models.Task;
 import lucns.avareminders.rest_api.ava.ResponseCallback;
 import lucns.avareminders.rest_api.ava.SessionTasksRestApi;
 import lucns.avareminders.rest_api.ava.SessionsRestApi;
@@ -33,6 +29,7 @@ import lucns.avareminders.views.FlexibleLayout;
 
 public class CourseRetrieveView {
 
+    private final ResponseCallback responseCallback;
     private final FlexibleLayout flexibleLayout;
     private final SessionsRestApi sessionsRestApi;
     private final SessionTasksRestApi sessionTasksRestApi;
@@ -42,8 +39,10 @@ public class CourseRetrieveView {
     private View viewActivities, viewMeetings;
     private final LinearLayout rootActivities, rootMeting;
     private boolean running;
+    private boolean synchronousMetingRetrieverFinished, tasksRetrieverFinished;
 
     public CourseRetrieveView(Course course, FlexibleLayout flexibleLayout, ResponseCallback responseCallback) {
+        this.responseCallback = responseCallback;
         this.course = course;
         this.flexibleLayout = flexibleLayout;
         this.inflater = LayoutInflater.from(flexibleLayout.getContext());
@@ -80,6 +79,7 @@ public class CourseRetrieveView {
                 new TimeRegister(course.id + "_sessions").setLastUpdate();
                 if (course.sessions == null) {
                     putEmptyInActivitiesRoot();
+                    responseCallback.onFinish();
                     return;
                 }
                 updateSessions();
@@ -103,6 +103,8 @@ public class CourseRetrieveView {
                 new TimeRegister(course.id + "_tasks").setLastUpdate();
                 if (tasks == null || tasks.length == 0) {
                     putEmptyInActivitiesRoot();
+                    tasksRetrieverFinished = true;
+                    if (synchronousMetingRetrieverFinished) responseCallback.onFinish();
                     return;
                 }
                 updateTasks(tasks);
@@ -124,12 +126,15 @@ public class CourseRetrieveView {
 
             @Override
             public void onFinish(SynchronousMeeting[] meetings) {
+                synchronousMetingRetrieverFinished = true;
                 new TimeRegister(course.id + "_meetings").setLastUpdate();
                 if (meetings == null || meetings.length == 0) {
                     putEmptyInMeetingRoot();
+                    if (tasksRetrieverFinished) responseCallback.onFinish();
                     return;
                 }
                 updateMeetings(meetings);
+                if (tasksRetrieverFinished) responseCallback.onFinish();
             }
         });
     }
@@ -158,10 +163,13 @@ public class CourseRetrieveView {
     private void updateTasks(Task[] tasks) {
         rootActivities.removeAllViews();
         if (tasks.length == 0) {
+            tasksRetrieverFinished = true;
+            if (synchronousMetingRetrieverFinished) responseCallback.onFinish();
             putEmptyInActivitiesRoot();
         }
         UIController uiController = UIController.getInstance(flexibleLayout.getContext());
         Map<String, TaskOverDueDateRestApi> map = new HashMap<>();
+        boolean retrieving = false;
         for (int i = 0; i < tasks.length; i++) {
             Task task = tasks[i];
             View view = inflater.inflate(R.layout.item_task, null, false);
@@ -224,6 +232,7 @@ public class CourseRetrieveView {
             if (task.openedDate == null) textBottomStart.setText(R.string.not_specified);
             else textBottomStart.setText(task.openedDate);
             if (task.overdueDate == null) {
+                retrieving  = true;
                 textBottomEnd.setText(R.string.not_specified);
                 if (Utils.hasInternetConnection() && task.url != null) {
                     progressBar.setVisibility(View.VISIBLE);
@@ -249,7 +258,11 @@ public class CourseRetrieveView {
                         @Override
                         public void onFinish() {
                             map.remove(task.url);
-                            if (map.isEmpty()) AvaUtils.setTasks(course.id, tasks);
+                            if (map.isEmpty()) {
+                                AvaUtils.setTasks(course.id, tasks);
+                                tasksRetrieverFinished = true;
+                                if (synchronousMetingRetrieverFinished) responseCallback.onFinish();
+                            }
                             progressBar.setVisibility(View.INVISIBLE);
                             if (task.openedDate == null) {
                                 textBottomStart.setText(R.string.not_specified);
@@ -293,6 +306,10 @@ public class CourseRetrieveView {
                 rootActivities.addView(space);
             }
             rootActivities.addView(view);
+        }
+        if (!retrieving) {
+            tasksRetrieverFinished = true;
+            if (synchronousMetingRetrieverFinished) responseCallback.onFinish();
         }
         flexibleLayout.computeSizes();
     }
@@ -468,5 +485,6 @@ public class CourseRetrieveView {
             return;
         }
         updateSessions();
+        responseCallback.onFinish();
     }
 }

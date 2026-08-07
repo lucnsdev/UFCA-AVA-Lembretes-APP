@@ -1,9 +1,9 @@
 package lucns.avareminders.rest_api.ava;
 
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.Student;
-import lucns.avareminders.ava.models.SynchronousMeeting;
-import lucns.avareminders.ava.models.Task;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.Student;
+import lucns.avareminders.ava_utilities.models.SynchronousMeeting;
+import lucns.avareminders.ava_utilities.models.Task;
 
 public abstract class ResponseCallback {
 

@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-import lucns.avareminders.ava.AvaUtils;
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.Session;
+import lucns.avareminders.ava_utilities.AvaUtils;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.Session;
 import lucns.avareminders.rest_api.internal.HttpStatus;
 import lucns.avareminders.rest_api.internal.RestApiBase;
 import lucns.avareminders.utils.Annotator;

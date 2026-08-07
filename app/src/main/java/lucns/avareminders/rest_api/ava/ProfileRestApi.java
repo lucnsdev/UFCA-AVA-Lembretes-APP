@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lucns.avareminders.ava.models.Student;
+import lucns.avareminders.ava_utilities.models.Student;
 import lucns.avareminders.rest_api.internal.HttpStatus;
 import lucns.avareminders.rest_api.internal.RestApiBase;
 import lucns.avareminders.utils.Annotator;

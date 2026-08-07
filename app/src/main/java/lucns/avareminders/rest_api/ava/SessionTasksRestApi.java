@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import lucns.avareminders.ava.AvaUtils;
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.Session;
-import lucns.avareminders.ava.models.Task;
+import lucns.avareminders.ava_utilities.AvaUtils;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.Session;
+import lucns.avareminders.ava_utilities.models.Task;
 import lucns.avareminders.rest_api.internal.HttpStatus;
 import lucns.avareminders.rest_api.internal.RestApiBase;
 import lucns.avareminders.utils.Annotator;
@@ -23,6 +23,7 @@ import lucns.avareminders.utils.Utils;
 public class SessionTasksRestApi extends RestApiBase {
 
     private String urlDatesObtain = "https://ava.ufca.edu.br/lib/ajax/service.php?sesskey=%s&info=core_get_fragment";
+    private Course course;
 
     public SessionTasksRestApi(ResponseCallback responseCallback) {
         super(responseCallback);
@@ -38,6 +39,7 @@ public class SessionTasksRestApi extends RestApiBase {
     }
 
     public void request(Course course) {
+        this.course = course;
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -113,6 +115,7 @@ public class SessionTasksRestApi extends RestApiBase {
         for (String line : lines) {
             if (line.contains("data-modtype")) {
                 task = Task.validateType(line.split("\"")[1]);
+                if (task != null) task.courseName = course.name;
                 continue;
             }
             if (task != null && line.contains("cm-link")) {

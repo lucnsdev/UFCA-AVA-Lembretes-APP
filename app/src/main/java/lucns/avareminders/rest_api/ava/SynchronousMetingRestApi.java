@@ -12,16 +12,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import lucns.avareminders.ava.AvaUtils;
-import lucns.avareminders.ava.models.Course;
-import lucns.avareminders.ava.models.SynchronousMeeting;
+import lucns.avareminders.ava_utilities.AvaUtils;
+import lucns.avareminders.ava_utilities.models.Course;
+import lucns.avareminders.ava_utilities.models.SynchronousMeeting;
 import lucns.avareminders.rest_api.internal.HttpStatus;
 import lucns.avareminders.rest_api.internal.RestApiBase;
 import lucns.avareminders.utils.Annotator;
+import lucns.avareminders.utils.Utils;
 
 public class SynchronousMetingRestApi extends RestApiBase {
 
     private final String urlTrigger = "https://ava.ufca.edu.br/mod/lti/launch.php?id=%d&triggerview=0";
+    private Course course;
 
     public SynchronousMetingRestApi(ResponseCallback responseCallback) {
         super(responseCallback);
@@ -37,6 +39,7 @@ public class SynchronousMetingRestApi extends RestApiBase {
     }
 
     public void request(Course course) {
+        this.course = course;
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -230,10 +233,11 @@ public class SynchronousMetingRestApi extends RestApiBase {
             if (line.contains("</tbody>") || (line.contains("Sessões agendadas") && lines[i + 1].contains("empty-list"))) break;
             if (line.contains("<tr class=\"d-flex row tr-row\">")) {
                 meeting = new SynchronousMeeting();
+                meeting.courseName = course.name;
                 continue;
             }
             if (line.contains("item-title")) {
-                meeting.title = line.substring(line.indexOf(">") + 1, line.indexOf("</div>"));
+                meeting.title = Utils.removeEmojis(line.substring(line.indexOf(">") + 1, line.indexOf("</div>")));
                 continue;
             }
             if (line.contains("col-md-3")) {

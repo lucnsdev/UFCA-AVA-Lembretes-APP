@@ -31,6 +31,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.TasksActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
     </application>

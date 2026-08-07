@@ -47,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_3"
+                android:layout_toStartOf="@+id/buttonShortcut"
                 android:layout_toEndOf="@+id/profileImage"
                 android:text="@string/my_courses"
                 android:textColor="@android:color/white"
@@ -59,9 +60,34 @@
                 android:layout_alignBottom="@+id/profileImage"
                 android:layout_marginStart="@dimen/margin_3"
                 android:layout_marginTop="@dimen/margin"
+                android:layout_toStartOf="@+id/buttonShortcut"
                 android:layout_toEndOf="@+id/profileImage"
                 android:text="@string/student"
                 android:textColor="@color/accent" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_toStartOf="@+id/buttonMenu">
+
+                <ProgressBar
+                    android:id="@+id/toolbarProgressBar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/indeterminate_progress_bar_small" />
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/buttonShortcut"
+                android:layout_width="@dimen/toolbar_height"
+                android:layout_height="@dimen/toolbar_height"
+                android:layout_marginEnd="@dimen/margin_3"
+                android:layout_toStartOf="@+id/buttonMenu"
+                android:background="@drawable/item_icon_background"
+                android:src="@drawable/icon_shortcut"
+                android:visibility="invisible" />
 
             <ImageButton
                 android:id="@+id/buttonMenu"
@@ -87,8 +113,7 @@
         android:layout_centerInParent="true"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/indeterminate_progress_bar"
-        android:orientation="horizontal"
-        android:visibility="invisible" />
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/rootNoConnection"

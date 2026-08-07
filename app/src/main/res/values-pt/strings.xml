@@ -24,7 +24,8 @@
     <string name="meetings">Encontros Síncronos</string>
     <string name="student">Estudante</string>
     <string name="concluded">(Concluído)</string>
-
+    <string name="tasks">Atividades, Trabalhos e Avaliações</string>
+    <string name="all_sorted_by_date">Mostrando tudo ordenado por data</string>
 
     <string name="loading">Carregando&#8230;</string>
     <string name="try_again">Tentar novamente</string>
